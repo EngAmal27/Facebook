@@ -141,49 +141,7 @@ Navigate to `http://localhost:3000` to view the application.
 2. See all conversations with unread indicators
 3. Unread messages show a badge with count
 
-## 📁 Project Structure
 
-```
-facebook-clone/
-├── public/
-│   ├── index.html
-│   ├── favicon.ico
-│   └── manifest.json
-├── src/
-│   ├── components/
-│   │   ├── FacebookClone.jsx          # Main component
-│   │   ├── Header.jsx                 # Navigation header
-│   │   ├── Sidebar.jsx                # Left sidebar
-│   │   ├── Feed.jsx                   # Main content feed
-│   │   ├── Post.jsx                   # Individual post component
-│   │   ├── CreatePost.jsx             # Post creation component
-│   │   ├── Stories.jsx                # Stories section
-│   │   ├── Comments.jsx               # Comments component
-│   │   ├── SearchResults.jsx          # Search results
-│   │   ├── Notifications.jsx          # Notifications dropdown
-│   │   └── Messages.jsx               # Messages dropdown
-│   ├── hooks/
-│   │   ├── useLocalStorage.js         # Local storage hook
-│   │   ├── useTheme.js                # Theme management hook
-│   │   └── useSearch.js               # Search functionality hook
-│   ├── utils/
-│   │   ├── helpers.js                 # Utility functions
-│   │   ├── constants.js               # App constants
-│   │   └── validation.js              # Input validation
-│   ├── styles/
-│   │   ├── theme.js                   # Theme configuration
-│   │   ├── globals.css                # Global styles
-│   │   └── components.css             # Component styles
-│   ├── assets/
-│   │   ├── images/                    # Static images
-│   │   └── icons/                     # Icon files
-│   ├── App.js                         # Root component
-│   ├── index.js                       # Entry point
-│   └── index.css                      # Root styles
-├── package.json
-├── README.md
-└── .gitignore
-```
 
 ## 🛠️ Technologies Used
 
