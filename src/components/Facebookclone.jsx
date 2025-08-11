@@ -17,7 +17,7 @@ const FacebookClone = () => {
   const [showMessages, setShowMessages] = useState(false);
   const [stories] = useState([
     { id: 1, user: 'Your Story', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face', hasStory: true, isYours: true },
-    { id: 2, user: 'Jane Smith', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b9c3f6e8?w=60&h=60&fit=crop&crop=face', hasStory: true },
+    { id: 2, user: 'Jane Smith', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face', hasStory: true },
     { id: 3, user: 'Mike Johnson', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face', hasStory: true },
     { id: 4, user: 'Sarah Wilson', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face', hasStory: false },
   ]);
@@ -26,7 +26,7 @@ const FacebookClone = () => {
     {
       id: 1,
       author: 'Jane Smith',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b9c3f6e8?w=40&h=40&fit=crop&crop=face',
+      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face',
       time: '2h',
       content: 'Just had an amazing day at the beach! The weather was perfect and the sunset was breathtaking. 🌅',
       image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=300&fit=crop',
@@ -61,7 +61,7 @@ const FacebookClone = () => {
   ]);
 
   const [notifications] = useState([
-    { id: 1, type: 'like', user: 'Jane Smith', content: 'liked your post', time: '5m', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b9c3f6e8?w=32&h=32&fit=crop&crop=face' },
+    { id: 1, type: 'like', user: 'Jane Smith', content: 'liked your post', time: '5m', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face' },
     { id: 2, type: 'comment', user: 'Mike Johnson', content: 'commented on your photo', time: '2h', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face' },
     { id: 3, type: 'friend', user: 'Emma Thompson', content: 'sent you a friend request', time: '1d', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=32&h=32&fit=crop&crop=face' }
   ]);
@@ -133,7 +133,7 @@ const FacebookClone = () => {
     if (term.length > 0) {
       const results = [
         ...posts.filter(post => post.author.toLowerCase().includes(term.toLowerCase())),
-        { type: 'user', name: 'Jane Smith', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b9c3f6e8?w=32&h=32&fit=crop&crop=face' }
+        { type: 'user', name: 'Jane Smith', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face' }
       ];
       setSearchResults(results);
       setShowSearch(true);
