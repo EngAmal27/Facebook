@@ -72,12 +72,39 @@ const FacebookClone = () => {
     { id: 3, user: 'Lisa Garcia', message: 'See you at the meeting tomorrow', time: '3h', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=32&h=32&fit=crop&crop=face', unread: true }
   ]);
 
+  const [contacts] = useState([
+    { name: 'Emma Thompson', online: true, avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=32&h=32&fit=crop&crop=face' },
+    { name: 'David Brown', online: false, avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face' },
+    { name: 'Lisa Garcia', online: true, avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=32&h=32&fit=crop&crop=face' },
+    { name: 'Tom Anderson', online: false, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face' },
+    { name: 'Amy Chen', online: true, avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=32&h=32&fit=crop&crop=face' },
+  ]);
+
+  // Add responsive state
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
   const fileInputRef = useRef(null);
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsTablet(width <= 1024 && width > 768);
+    };
+
+    // Set initial state
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Theme styles
   const getTheme = () => ({
     container: {
-      backgroundColor: darkMode ? '#18191a' : '#f0f2f5',
+      backgroundColor: darkMode ? '#18191a' : '#ffffffff',
       color: darkMode ? '#e4e6ea' : '#1c1e21'
     },
     card: {
@@ -91,10 +118,10 @@ const FacebookClone = () => {
       color: darkMode ? '#b0b3b8' : '#65676b'
     },
     border: {
-      borderColor: darkMode ? '#3a3b3c' : '#dadde1'
+      borderColor: darkMode ? '#3a3b3c' : '#ffffffff'
     },
     hover: {
-      backgroundColor: darkMode ? '#3a3b3c' : '#f2f2f2'
+      backgroundColor: darkMode ? '#3a3b3c' : '#ffffffff'
     }
   });
 
@@ -219,7 +246,7 @@ const FacebookClone = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '0 16px',
+      padding: isMobile ? '0 8px' : '0 16px',
       height: '100%',
       maxWidth: '1920px',
       margin: '0 auto'
@@ -227,12 +254,12 @@ const FacebookClone = () => {
     leftSection: {
       display: 'flex',
       alignItems: 'center',
-      gap: '16px',
+      gap: isMobile ? '8px' : '16px',
       flex: '1',
-      maxWidth: '320px'
+      maxWidth: isMobile ? '200px' : '320px'
     },
     logo: {
-      fontSize: '28px',
+      fontSize: isMobile ? '20px' : '28px',
       fontWeight: 'bold',
       color: '#1877f2',
       cursor: 'pointer'
@@ -240,7 +267,8 @@ const FacebookClone = () => {
     searchContainer: {
       position: 'relative',
       flex: '1',
-      maxWidth: '240px'
+      maxWidth: isMobile ? '120px' : '240px',
+      display: isMobile ? 'none' : 'block'
     },
     searchBox: {
       display: 'flex',
@@ -281,19 +309,19 @@ const FacebookClone = () => {
       borderBottom: `1px solid ${darkMode ? '#3a3b3c' : '#f0f2f5'}`
     },
     centerSection: {
-      display: 'flex',
+      display: isMobile ? 'none' : 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       flex: '1',
       maxWidth: '600px'
     },
     navButton: {
-      padding: '12px 40px',
+      padding: isMobile ? '8px 20px' : '12px 40px',
       border: 'none',
       backgroundColor: 'transparent',
       cursor: 'pointer',
       transition: 'all 0.2s',
-      fontSize: '24px',
+      fontSize: isMobile ? '18px' : '24px',
       borderBottom: '3px solid transparent',
       borderRadius: '0',
       position: 'relative'
@@ -301,10 +329,10 @@ const FacebookClone = () => {
     rightSection: {
       display: 'flex',
       alignItems: 'center',
-      gap: '8px',
+      gap: isMobile ? '4px' : '8px',
       flex: '1',
       justifyContent: 'flex-end',
-      maxWidth: '320px'
+      maxWidth: isMobile ? '150px' : '320px'
     },
     iconButton: {
       padding: '8px',
@@ -313,12 +341,12 @@ const FacebookClone = () => {
       border: 'none',
       cursor: 'pointer',
       position: 'relative',
-      width: '40px',
-      height: '40px',
+      width: isMobile ? '36px' : '40px',
+      height: isMobile ? '36px' : '40px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '20px',
+      fontSize: isMobile ? '16px' : '20px',
       ...theme.text
     },
     badge: {
@@ -360,6 +388,7 @@ const FacebookClone = () => {
     mainContent: {
       display: 'flex',
       paddingTop: '56px',
+      paddingBottom: isMobile ? '60px' : '0',
       ...theme.container,
       maxWidth: '1920px',
       margin: '0 auto'
@@ -367,46 +396,50 @@ const FacebookClone = () => {
     sidebar: {
       position: 'fixed',
       left: 0,
-      width: '360px',
+      width: isMobile ? '0' : isTablet ? '280px' : '360px',
       height: 'calc(100vh - 56px)',
       overflowY: 'auto',
       padding: '20px 8px',
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      display: isMobile ? 'none' : 'block'
     },
     feed: {
       flex: '1',
-      marginLeft: '360px',
-      marginRight: '360px',
-      padding: '20px 0',
-      maxWidth: '500px',
-      margin: '0 auto'
+      marginLeft: isMobile ? '0' : isTablet ? '280px' : '360px',
+      marginRight: isMobile ? '0' : isTablet ? '0' : '360px',
+      padding: isMobile ? '10px' : '20px 0',
+      maxWidth: isMobile ? '100%' : '500px',
+      margin: isMobile ? '10px auto' : '0 auto',
+      width: isMobile ? 'calc(100% - 20px)' : 'auto'
     },
     storiesContainer: {
       display: 'flex',
       gap: '8px',
-      padding: '16px',
+      padding: isMobile ? '12px' : '16px',
       ...theme.card,
       borderRadius: '8px',
       marginBottom: '20px',
-      overflowX: 'auto'
+      overflowX: 'auto',
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none'
     },
     story: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      minWidth: '80px',
+      minWidth: isMobile ? '60px' : '80px',
       cursor: 'pointer'
     },
     storyAvatar: {
-      width: '60px',
-      height: '60px',
+      width: isMobile ? '50px' : '60px',
+      height: isMobile ? '50px' : '60px',
       borderRadius: '50%',
       border: '3px solid #1877f2',
       marginBottom: '4px',
       position: 'relative'
     },
     storyName: {
-      fontSize: '12px',
+      fontSize: isMobile ? '10px' : '12px',
       ...theme.text,
       textAlign: 'center',
       wordBreak: 'break-word'
@@ -550,18 +583,56 @@ const FacebookClone = () => {
     },
     darkModeToggle: {
       position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      width: '56px',
-      height: '56px',
+      bottom: isMobile ? '10px' : '20px',
+      right: isMobile ? '10px' : '20px',
+      width: isMobile ? '48px' : '56px',
+      height: isMobile ? '48px' : '56px',
       borderRadius: '50%',
       backgroundColor: darkMode ? '#42a5f5' : '#1877f2',
       border: 'none',
       color: 'white',
-      fontSize: '24px',
+      fontSize: isMobile ? '20px' : '24px',
       cursor: 'pointer',
       boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
       zIndex: 1000
+    },
+    // Add right sidebar for desktop only
+    rightSidebar: {
+      position: 'fixed',
+      right: 0,
+      width: isMobile || isTablet ? '0' : '360px',
+      height: 'calc(100vh - 56px)',
+      overflowY: 'auto',
+      padding: '20px 8px',
+      backgroundColor: 'transparent',
+      display: isMobile || isTablet ? 'none' : 'block'
+    },
+    mobileNav: {
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: darkMode ? '#242526' : 'white',
+      borderTop: `1px solid ${darkMode ? '#3a3b3c' : '#dadde1'}`,
+      display: isMobile ? 'flex' : 'none',
+      justifyContent: 'space-around',
+      padding: '8px 0',
+      zIndex: 50
+    },
+    mobileNavButton: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '4px 8px',
+      fontSize: '20px'
+    },
+    mobileNavText: {
+      fontSize: '10px',
+      marginTop: '2px',
+      ...theme.secondaryText
     }
   };
 
@@ -742,10 +813,82 @@ const FacebookClone = () => {
             />
           </div>
         </div>
+
+        {/* Right Sidebar - Desktop Only */}
+        {!isMobile && !isTablet && (
+          <div style={styles.rightSidebar}>
+            <div style={{padding: '20px', ...theme.text}}>
+              <h3 style={{...theme.secondaryText, fontSize: '17px', marginBottom: '16px'}}>Sponsored</h3>
+              <div style={{...styles.card, padding: '12px', marginBottom: '20px'}}>
+                <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                  <img 
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=50&h=50&fit=crop" 
+                    style={{width: '48px', height: '48px', borderRadius: '8px'}}
+                    alt="Ad"
+                  />
+                  <div>
+                    <div style={{fontWeight: '600', fontSize: '14px'}}>Learn Web Development</div>
+                    <div style={{...theme.secondaryText, fontSize: '12px'}}>codecademy.com</div>
+                  </div>
+                </div>
+              </div>
+              
+              <h3 style={{...theme.secondaryText, fontSize: '17px', marginBottom: '16px'}}>Contacts</h3>
+              {contacts.map((contact, index) => (
+                <div key={index} style={{display: 'flex', alignItems: 'center', gap: '12px', padding: '8px', borderRadius: '8px', marginBottom: '4px', cursor: 'pointer'}}>
+                  <div style={{position: 'relative'}}>
+                    <img 
+                      src={contact.avatar} 
+                      style={{width: '32px', height: '32px', borderRadius: '50%'}}
+                      alt={contact.name}
+                    />
+                    {contact.online && (
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '-2px',
+                        right: '-2px',
+                        width: '12px',
+                        height: '12px',
+                        backgroundColor: '#31a24c',
+                        border: '2px solid white',
+                        borderRadius: '50%'
+                      }}></div>
+                    )}
+                  </div>
+                  <span style={{fontSize: '15px', fontWeight: '500'}}>{contact.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main Content */}
       <div style={styles.mainContent}>
+        {/* Left Sidebar - Desktop Only */}
+        {!isMobile && !isTablet && (
+          <div style={styles.sidebar}>
+            {/* Sidebar content here - keeping it simple for now */}
+            <div style={{padding: '20px', ...theme.text}}>
+              <div style={{marginBottom: '20px'}}>
+                <img 
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=36&h=36&fit=crop&crop=face" 
+                  style={{width: '36px', height: '36px', borderRadius: '50%', marginRight: '12px'}}
+                  alt="Profile"
+                />
+                <span style={{fontWeight: '600'}}>John Doe</span>
+              </div>
+              <div style={{...theme.secondaryText, fontSize: '15px'}}>
+                <div style={{marginBottom: '8px'}}>👥 Friends</div>
+                <div style={{marginBottom: '8px'}}>👥 Groups</div>
+                <div style={{marginBottom: '8px'}}>🛒 Marketplace</div>
+                <div style={{marginBottom: '8px'}}>📺 Watch</div>
+                <div style={{marginBottom: '8px'}}>📷 Photos</div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Feed */}
         <div style={styles.feed}>
           {/* Stories */}
@@ -1019,6 +1162,62 @@ const FacebookClone = () => {
           ))}
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMobile && (
+        <div style={styles.mobileNav}>
+          <button 
+            style={{
+              ...styles.mobileNavButton,
+              color: activeNav === 'home' ? '#1877f2' : theme.secondaryText.color
+            }}
+            onClick={() => setActiveNav('home')}
+          >
+            <span>🏠</span>
+            <span style={styles.mobileNavText}>Home</span>
+          </button>
+          <button 
+            style={{
+              ...styles.mobileNavButton,
+              color: activeNav === 'people' ? '#1877f2' : theme.secondaryText.color
+            }}
+            onClick={() => setActiveNav('people')}
+          >
+            <span>👥</span>
+            <span style={styles.mobileNavText}>Friends</span>
+          </button>
+          <button 
+            style={{
+              ...styles.mobileNavButton,
+              color: activeNav === 'video' ? '#1877f2' : theme.secondaryText.color
+            }}
+            onClick={() => setActiveNav('video')}
+          >
+            <span>📺</span>
+            <span style={styles.mobileNavText}>Watch</span>
+          </button>
+          <button 
+            style={{
+              ...styles.mobileNavButton,
+              color: activeNav === 'store' ? '#1877f2' : theme.secondaryText.color
+            }}
+            onClick={() => setActiveNav('store')}
+          >
+            <span>🛒</span>
+            <span style={styles.mobileNavText}>Store</span>
+          </button>
+          <button 
+            style={{
+              ...styles.mobileNavButton,
+              color: activeNav === 'groups' ? '#1877f2' : theme.secondaryText.color
+            }}
+            onClick={() => setActiveNav('groups')}
+          >
+            <span>👥</span>
+            <span style={styles.mobileNavText}>Groups</span>
+          </button>
+        </div>
+      )}
 
       {/* Dark Mode Toggle */}
       <button
